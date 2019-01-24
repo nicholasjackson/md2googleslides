@@ -96,6 +96,7 @@ function newEnv(rules, css) {
         slides: [],
         currentSlide: null,
         styles: [{
+            layout: undefined,
             bold: undefined,
             italic: undefined,
             fontFamily: undefined,
@@ -126,7 +127,6 @@ function endSlide(env) {
         if (env.text && env.text.rawText.trim().length) {
             env.currentSlide.bodies.push(env.text);
         }
-
         env.slides.push(env.currentSlide);
     }
 }
@@ -134,6 +134,7 @@ function endSlide(env) {
 function startSlide(env) {
     env.currentSlide = {
         objectId: uuid.v1(),
+        layout: null,
         title: null,
         subtitle: null,
         backgroundImage: null,
@@ -256,6 +257,17 @@ inlineTokenRules['paragraph_open'] = function(token, env) {
         startTextBlock(env);
     } else if (!env.text) {
         startTextBlock(env);
+    }
+
+    // if the first element is a style create a new slide
+    const style = getStyle(token,{});
+    // If we have a layout style set this on the slide so we can select the 
+    // right master template when building the deck
+    if (style.layout != "") {
+        startStyle(style, env);
+        endStyle(env);
+        startSlide(env);
+        env.currentSlide.layout = style.layout;
     }
 };
 
@@ -641,6 +653,9 @@ function convertCssRule(rule, style = {}) {
           unit: "PT"
         }
       }
+    }
+    if (rule['layout']) {
+        style.layout = rule['layout'];
     }
     return style;
 }

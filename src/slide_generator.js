@@ -59,10 +59,24 @@ class SlideGenerator {
      */
     static newPresentation(oauth2Client, title) {
         let apiClient = new ApiClient(oauth2Client);
+        return apiClient.copyPresentation({
+                fileId: '1UYR25Hdf32x1ixEor4Woo6isKWaL66xI7YfGmzezx7Y',
+                resource: {
+                    name: title
+                }
+        }).then(response => SlideGenerator.getPresentation(apiClient, response));
+
+        /*
         return apiClient.createPresentation({
             resource: {
                 title: title
-            }
+        }).then(response => new SlideGenerator(apiClient, response.data));
+        */
+    }
+
+    static getPresentation(apiClient, response) {
+        return apiClient.getPresentation({
+                presentationId: response.data.id
         }).then(response => new SlideGenerator(apiClient, response.data));
     }
 

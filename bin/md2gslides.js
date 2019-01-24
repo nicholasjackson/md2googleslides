@@ -28,7 +28,11 @@ const opener = require('opener');
 const readline = require('readline');
 
 const SCOPES = [
-    'https://www.googleapis.com/auth/presentations'
+    'https://www.googleapis.com/auth/presentations',
+    'https://www.googleapis.com/auth/drive',
+    'https://www.googleapis.com/auth/drive.appdata',
+    'https://www.googleapis.com/auth/drive.metadata',
+    'https://www.googleapis.com/auth/drive.file',
 ];
 const USER_HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
 const STORED_CREDENTIALS_PATH = path.join(USER_HOME, '.credentials', 'md2gslides.json');
