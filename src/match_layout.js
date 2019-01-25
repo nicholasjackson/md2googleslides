@@ -21,8 +21,7 @@ function matchLayout(presentation, slide) {
     if (slide.layout != undefined) {
         for(let layout of presentation.data.layouts) {
             if (layout.layoutProperties.displayName == slide.layout) {
-                console.log("found slide layout");
-                    return new GenericLayout(layout.layoutProperties.name, presentation, slide);
+                return new GenericLayout(layout.layoutProperties.name, presentation, slide);
             }
         }
     }else {

@@ -59,31 +59,36 @@ class SlideGenerator {
      */
     static newPresentation(oauth2Client, title) {
         let apiClient = new ApiClient(oauth2Client);
-        return apiClient.copyPresentation({
-                fileId: '1UYR25Hdf32x1ixEor4Woo6isKWaL66xI7YfGmzezx7Y',
-                resource: {
-                    name: title
-                }
-        }).then(response => SlideGenerator.getPresentation(apiClient, response));
-
-        /*
         return apiClient.createPresentation({
             resource: {
                 title: title
+            }
         }).then(response => new SlideGenerator(apiClient, response.data));
-        */
     }
 
-    static getPresentation(apiClient, response) {
-        return apiClient.getPresentation({
-                presentationId: response.data.id
-        }).then(response => new SlideGenerator(apiClient, response.data));
+    /**
+     * Returns a generator that copies an existing presentation.
+     *
+     * @param {google.auth.OAuth2} oauth2Client User credentials
+     * @param {string} title Title of presentation
+     * @param {string} presentationId ID of presentation to copy
+     * @returns {Promise.<SlideGenerator>}
+     */
+    static copyPresentation(oauth2Client, title, presentationId) {
+        let apiClient = new ApiClient(oauth2Client);
+        return apiClient.copyPresentation({
+                fileId: presentationId,
+                resource: {
+                    name: title
+                }
+        }).then(response => SlideGenerator.forPresentation(oauth2Client, response.data.id));
     }
 
     /**
      * Returns a generator that writes to an existing presentation.
      *
      * @param {google.auth.OAuth2} oauth2Client User credentials
+     * @param {string} presentationId ID of presentation to use
      * @returns {Promise.<SlideGenerator>}
      */
     static forPresentation(oauth2Client, presentationId) {
@@ -209,6 +214,7 @@ class SlideGenerator {
             requests: []
         };
         for(let slide of this.slides) {
+            debug('appendContent', slide.layout);
             slide.layout.appendContentRequests(batch.requests);
         }
         return batch;
