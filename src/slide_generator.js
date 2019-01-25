@@ -191,7 +191,6 @@ class SlideGenerator {
             requests: []
         };
         for(let slide of this.slides) {
-            console.log("create layout", slide.customLayout);
             const layout = matchLayout(this.presentation, slide);
             if (!layout) {
                 throw new Error(`Unable to determine layout for slide # ${slide.index}`);

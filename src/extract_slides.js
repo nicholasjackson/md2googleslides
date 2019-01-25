@@ -105,7 +105,7 @@ function newEnv(rules, css) {
             underline: undefined,
             strikethrough: undefined,
             smallCaps: undefined,
-            baselineOffset: undefined
+            baselineOffset: undefined,
         }],
         listDepth: 0,
         css: css,
@@ -263,7 +263,6 @@ inlineTokenRules['paragraph_open'] = function(token, env) {
     // If we have a layout style set this on the slide so we can select the 
     // right master template when building the deck
     if (style.layout != undefined && style.layout != "") {
-        console.log("layout", style);
         env.currentSlide.customLayout = style.layout;
     }
 };
@@ -465,16 +464,32 @@ fullTokenRules['hr'] = function(token, env) {
 };
 
 fullTokenRules['image'] = function(token, env) {
+    const style = getStyle(token, {});
+
     const image = {
         url: attr(token, 'src'),
         width: undefined,
         height: undefined,
-        padding: 0
+        padding: 0,
+        offsetX: 0,
+        offsetY: 0,
     };
+    
     const padding = attr(token, 'pad');
     if (padding) {
         image.padding = parseInt(padding);
     }
+
+    const offsetX = attr(token, 'offset-x');
+    if (offsetX) {
+        image.offsetX = parseInt(offsetX);
+    }
+    
+    const offsetY = attr(token, 'offset-y');
+    if (offsetY) {
+        image.offsetY = parseInt(offsetY);
+    }
+    
     if (hasClass(token, 'background')) {
         env.currentSlide.backgroundImage = image;
     } else {

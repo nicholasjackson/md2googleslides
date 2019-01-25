@@ -23,7 +23,7 @@ Before we dive into the how I think it is really important to understand why, wh
 
 ## Easy to bypass the perimeter by attacking code
 
-![](https://raw.githubusercontent.com/nicholasjackson/md2googleslides/custom_layout/examples/images/example2/bypass.png)
+![](https://raw.githubusercontent.com/nicholasjackson/md2googleslides/custom_layout/examples/images/example2/bypass.png){pad=100 offset-y=100}
 
 <!--
 What if I told you that an attacker could quite possibly by pass that external defence, that they had the possibility to gain access to the internal network without even trying to touch external firewall but by looking for application code level vulnerabilities which allows them direct access to your internal systems?
