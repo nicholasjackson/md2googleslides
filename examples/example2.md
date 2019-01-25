@@ -1,9 +1,9 @@
 ---
 {style="layout: 01 Main Title - Consul"}
 
-# This is a title slide
+# Security
 
-## Your name here
+## Nic Jackson
 
 <!--
 This only appears as a speaker note.
@@ -19,6 +19,19 @@ Before we dive into the how I think it is really important to understand why, wh
 -->
 
 ---
+{style="layout: 14 Title at Top"}
+
+## Easy to bypass the perimeter by attacking code
+
+![](https://raw.githubusercontent.com/nicholasjackson/md2googleslides/custom_layout/examples/images/example2/bypass.png)
+
+<!--
+What if I told you that an attacker could quite possibly by pass that external defence, that they had the possibility to gain access to the internal network without even trying to touch external firewall but by looking for application code level vulnerabilities which allows them direct access to your internal systems?
+
+You might believe me, you might say no chance, you might say I have heard about this approach but it would never happen to me we patch our systems regularly and take a secure code review of the application code we write. 
+-->
+
+---
 {style="layout: 11-3 Code Editor"}
 
 # Slides can have code
@@ -29,10 +42,3 @@ function hello() {
   console.log('Hello world');
 }
 ```
-
----
-{style="layout: 14 Title at Top"}
-
-## exa
-
-![](https://picsum.photos/1600/900)

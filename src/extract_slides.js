@@ -96,7 +96,6 @@ function newEnv(rules, css) {
         slides: [],
         currentSlide: null,
         styles: [{
-            layout: undefined,
             bold: undefined,
             italic: undefined,
             fontFamily: undefined,
@@ -134,7 +133,7 @@ function endSlide(env) {
 function startSlide(env) {
     env.currentSlide = {
         objectId: uuid.v1(),
-        layout: null,
+        customLayout: null,
         title: null,
         subtitle: null,
         backgroundImage: null,
@@ -263,11 +262,9 @@ inlineTokenRules['paragraph_open'] = function(token, env) {
     const style = getStyle(token,{});
     // If we have a layout style set this on the slide so we can select the 
     // right master template when building the deck
-    if (style.layout != "") {
-        startStyle(style, env);
-        endStyle(env);
-        startSlide(env);
-        env.currentSlide.layout = style.layout;
+    if (style.layout != undefined && style.layout != "") {
+        console.log("layout", style);
+        env.currentSlide.customLayout = style.layout;
     }
 };
 
@@ -501,7 +498,7 @@ fullTokenRules['video'] = function(token, env) {
 
 fullTokenRules['table_open'] = function(token, env) {
     const style = getStyle(token, {});
-    startStyle(style, env);
+    customLayout(style, env);
     env.table = {
         rows: 0,
         columns: 0,

@@ -18,15 +18,18 @@ const layouts = [];
 
 function matchLayout(presentation, slide) {
     // if we have manually set the slide layout get the master from the presentation
-    if (slide.layout != undefined) {
+    if (slide.customLayout != undefined) {
         for(let layout of presentation.data.layouts) {
-            if (layout.layoutProperties.displayName == slide.layout) {
+            if (layout.layoutProperties.displayName == slide.customLayout) {
+                console.log("found layout", layout.layoutProperties.displayName, layout.layoutProperties.name);
                 return new GenericLayout(layout.layoutProperties.name, presentation, slide);
             }
         }
+        console.log("layout not found", slide.customLayout);
     }else {
         for(let layout of layouts) {
             if (layout.match(slide)) {
+                console.log('use default layout', layout.name);
                 return new GenericLayout(layout.name, presentation, slide);
             }
         }
